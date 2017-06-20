@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity implements AIListener{
     private TextView Status;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,8 +34,9 @@ public class MainActivity extends AppCompatActivity implements AIListener{
         Status = (TextView)findViewById(R.id.textView);
 
 
+
         config = new AIConfiguration("9845c17bfa80410f8ae387dff4b7730b",
-                AIConfiguration.SupportedLanguages.Portuguese,
+                AIConfiguration.SupportedLanguages.PortugueseBrazil,
                 AIConfiguration.RecognitionEngine.System);
         service = AIService.getService(this, config);
         service.setListener(this);
@@ -43,8 +45,10 @@ public class MainActivity extends AppCompatActivity implements AIListener{
             @Override
             public void onClick(View v) {
                 service.startListening();
+                service.stopListening();
             }
         });
+
     }
 
     @Override
@@ -60,9 +64,9 @@ public class MainActivity extends AppCompatActivity implements AIListener{
         }
 
         // Show results in TextView.
-        Status.setText("Query:" + results.getResolvedQuery() + //A frase que o utilizador usou
-                "\nSpeech: " + results.getFulfillment().getSpeech() + //A resposta
-                "\nParameters: " + parameterString); //Os parametros
+        Status.setText("Oque Foi Dito:" + results.getResolvedQuery() + //A frase que o utilizador usou
+                "\nResposta AI: " + results.getFulfillment().getSpeech() + //A resposta
+                "\nParametros: " + parameterString); //Os parametros
 
     }
 
@@ -78,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements AIListener{
 
     @Override
     public void onListeningStarted() {// quando o microfone é activado
-
+        Status.setText("Escutando...");
     }
 
     @Override
@@ -88,6 +92,6 @@ public class MainActivity extends AppCompatActivity implements AIListener{
 
     @Override
     public void onListeningFinished() {// quando o microfone é desactivado (porque o usuário terminou de falar)
-
+        Status.setText("Escutando...");
     }
 }
